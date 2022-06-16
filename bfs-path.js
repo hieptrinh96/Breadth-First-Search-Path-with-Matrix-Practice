@@ -24,19 +24,27 @@ function findNeighbors(node, matrix) {
 function bfsPath(matrix, startNode, endValue) {
     const queue = [startNode];
     const arr = [];
+    // we want the string version since we're using it to compared to endvalue which is a number 
     let stringVersion = startNode.toString();
     let visited = new Set().add(stringVersion);
     while (queue.length) {
         let currentNode = queue.shift();
         arr.push(currentNode);
+        // set a condition to end the search once we find the value that matches endvalue
+        // since currentnode equals to [row, col], we know there's only 2 indices, so we can 
+        // use matrix of that node to compare it with our endvalue 
         if (matrix[currentNode[0]][currentNode[1]] === endValue) return arr;
-
+        // neighbor holds the result of the neighbors helper function 
         let neighbors = findNeighbors(currentNode, matrix);
-
         for (let i = 0; i < neighbors.length; i++) {
             let neighbor = neighbors[i];
+            // checking to see if there are found in our visited set 
+            // everything inside visited is a string so we have to use toString 
+            // before adding it in
             if (!visited.has(neighbor.toString())) {
+                // if not, add each one in 
                 visited.add(neighbor.toString());
+                // to to also add to queue to continue the while loop
                 queue.push(neighbor);
             }
         }
