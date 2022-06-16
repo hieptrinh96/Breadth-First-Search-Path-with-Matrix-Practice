@@ -22,7 +22,26 @@ function findNeighbors(node, matrix) {
 }
 
 function bfsPath(matrix, startNode, endValue) {
-    
+    const queue = [startNode];
+    const arr = [];
+    let stringVersion = startNode.toString();
+    let visited = new Set().add(stringVersion);
+    while (queue.length) {
+        let currentNode = queue.shift();
+        arr.push(currentNode);
+        if (matrix[currentNode[0]][currentNode[1]] === endValue) return arr;
+
+        let neighbors = findNeighbors(currentNode, matrix);
+
+        for (let i = 0; i < neighbors.length; i++) {
+            let neighbor = neighbors[i];
+            if (!visited.has(neighbor.toString())) {
+                visited.add(neighbor.toString());
+                queue.push(neighbor);
+            }
+        }
+    }
+    return false;
 }
 
 
